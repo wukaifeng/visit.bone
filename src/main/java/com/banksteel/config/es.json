@@ -1,0 +1,29 @@
+{
+    "version": true, 
+	"size" : "10000",
+    "query": {
+      "bool" : {
+        "must" : [
+		  {
+          "query_string": {
+            "query": "env:\"prod\" AND type:\"application\"  AND app:\"@app\" AND level:\"ERROR\"", 
+            "analyze_wildcard": true
+          }
+		  },
+          {
+            "range" : {
+              "@timestamp" : {
+                "gte" : "@startTime",
+                "lte" : "@endTime",
+                "format": "epoch_millis"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "_source": {
+    "excludes": [ ]
+	},
+	"sort": "@timestamp"
+  }
